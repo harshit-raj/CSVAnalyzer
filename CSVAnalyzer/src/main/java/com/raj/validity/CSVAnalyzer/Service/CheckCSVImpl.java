@@ -2,20 +2,21 @@ package com.raj.validity.CSVAnalyzer.Service;
 
 import com.raj.validity.CSVAnalyzer.Model.Person;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Service
 public class CheckCSVImpl implements CheckCSV {
     @Override
-    public List<List<Person>> getDuplicate(List<Person> personList) {
+    public List<List<Person>> getDuplicate(List<Person> personList, double threshold) {
         List<List<Person>> dupList = new ArrayList<List<Person>>();
         for(int i = 0; i<personList.size()-1;i++){
             boolean hasDuplicates = false;
             List<Person> duplicates = new ArrayList<Person>();
             for (int j = i+1; j<personList.size();j++){
                 float n = difPercent(personList.get(i),personList.get(j));
-                if(n<50) {
+                if(n<threshold) {
                     if(!hasDuplicates){
                         duplicates.add(personList.get(i));
                         hasDuplicates = true;
