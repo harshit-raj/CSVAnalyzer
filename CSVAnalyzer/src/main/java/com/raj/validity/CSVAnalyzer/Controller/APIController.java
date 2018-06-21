@@ -25,9 +25,9 @@ public class APIController {
 
 
     @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
-    PersonAndDuplicate upload (@RequestParam("file")MultipartFile mpf){
+    PersonAndDuplicate upload (@RequestParam("file")MultipartFile mpf, @RequestParam("threshold")int threshold){
         List<Person> personList = csvHandler.parseCSV(mpf);
-        List<List<Person>> dupList = checkCSV.getDuplicate(personList,50);
+        List<List<Person>> dupList = checkCSV.getDuplicate(personList,threshold);
         PersonAndDuplicate personAndDuplicate = new PersonAndDuplicate(personList,dupList);
         return  personAndDuplicate;
 
