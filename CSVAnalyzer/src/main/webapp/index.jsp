@@ -5,7 +5,11 @@
     <body>
         <h1>CSV Analyzer</h1>
         <form id="fileUpload" method="POST" enctype="multipart/form-data">
+            <label>Choose CSV file</label>
             <input name="file" type="file">
+            <label>Threshold</label>
+            <input type="range" id="threshold" name="threshold"
+                   min="0" max="100" />
             <input type="submit" id="submit">
 
         </form>
@@ -17,6 +21,8 @@
         <script>
             $(document).ready(function () {
                 $("#submit").click(function (event) {
+                    $("#list").empty();
+                    $("#dup").empty();
                     event.preventDefault();
                     var form = $('#fileUpload')[0];
                     var data = new FormData(form);
@@ -44,8 +50,10 @@
 
                             $("#dup").append("<h2><b>Duplicate Data :</b></h2></br> <table>");
                             $.each(e.duplicateList, function() {
+                                $("#dup").append("<tr >");
                                 $.each(this, function() {
                                     $("#dup").append("<tr >");
+
 
                                     $.each(this, function (k, v) {
                                         $("#dup").append("<td>"+v+"</td>");
@@ -53,9 +61,10 @@
                                     $("#dup").append("</tr>");
 
                                 });
-                                $("#dup").append("</table>");
+                                $("#dup").append("</tr>");
 
                             });
+                            $("#dup").append("</table>");
                             $("#submit").prop("disabled", false);
 
                         },
