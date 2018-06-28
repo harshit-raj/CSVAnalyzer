@@ -1,6 +1,13 @@
 <html>
     <head>
         <title>CSV Analyzer</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <style>
+            #outerTable{
+
+            }
+        </style>
+
     </head>
     <body>
         <h1>CSV Analyzer</h1>
@@ -38,33 +45,42 @@
                         cache: false,
                         timeout: 600000,
                         success: function (e) {
-                            $("#list").append("<h2><b>CSV Details :<b></h2></br><table>");
+                            $("#list").append("<h2><b>CSV Details :<b></h2></br>");
+                            var tabC;
+                            tabC = $("<table/>");
                             $.each(e.personList, function() {
-                                $("#list").append("<tr>");
+                                var tr;
+                                tr = $("<tr/>");
                                 $.each(this, function(k, v) {
-                                    $("#list").append("<td>"+v+"</td>");
+                                    tr.append("<td>"+v+"</td>");
                                 });
-                                $("#list").append("</tr>");
+                                tabC.append(tr);
                             });
-                            $("#list").append("</table>");
+                            $("#list").append(tabC);
 
-                            $("#dup").append("<h2><b>Duplicate Data :</b></h2></br> <table>");
+                            $("#dup").append("<h2><b>Duplicate Data :</b></h2></br>");
+                            var dupT;
+                            dupT = $("<table/>");
                             $.each(e.duplicateList, function() {
-                                $("#dup").append("<tr >");
+                                var dupR;
+                                dupR = $("<tr/>");
+                                var inTab;
+                                inTab =$("<table/>");
+
                                 $.each(this, function() {
-                                    $("#dup").append("<tr >");
-
-
+                                    var inDupR;
+                                    inDupR = $("<tr/>");
                                     $.each(this, function (k, v) {
-                                        $("#dup").append("<td>"+v+"</td>");
+                                        inDupR.append("<td>"+v+"</td>");
                                     });
-                                    $("#dup").append("</tr>");
+                                    inTab.append(inDupR);
 
                                 });
-                                $("#dup").append("</tr>");
+                                dupR.append(inTab);
+                                dupT.append(dupR);
 
                             });
-                            $("#dup").append("</table>");
+                            $("#dup").append(dupT);
                             $("#submit").prop("disabled", false);
 
                         },
